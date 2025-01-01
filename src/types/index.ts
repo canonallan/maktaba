@@ -8,7 +8,7 @@ export interface User {
 }
 
 export interface Listing {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -16,6 +16,7 @@ export interface Listing {
   condition: 'new' | 'like-new' | 'good' | 'fair' | 'poor';
   images: string[];
   sellerId: string;
+  sellerName: string;
   status: 'available' | 'pending' | 'sold';
   createdAt: string;
   updatedAt: string;
@@ -38,4 +39,16 @@ export interface Order {
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Conversation {
+  user: {
+    id: string;
+    name: string;
+    avatar?: string;
+  };
+  lastMessage?: {
+    content: string;
+    createdAt: string;
+  };
 }
