@@ -31,6 +31,22 @@ export const createListing = createAsyncThunk(
     return response.data;
   }
 );
+export const deleteListing = createAsyncThunk(
+  'listings/deleteListing',
+  async (listingId: string) => {
+    await api.delete(`/listings/${listingId}`);
+    return listingId;
+  }
+);
+
+export const updateListing = createAsyncThunk(
+  'listings/updateListing',
+  async ({ id, data }: { id: string; data: Partial<Listing> }) => {
+    const response = await api.put(`/listings/${id}`, data);
+    return response.data;
+  }
+);
+
 
 const listingSlice = createSlice({
   name: 'listings',
@@ -56,6 +72,17 @@ const listingSlice = createSlice({
       })
       .addCase(createListing.fulfilled, (state, action) => {
         state.listings.unshift(action.payload);
+        state.listings = state.listings.filter(
+          listing => listing.id !== action.payload
+        );
+      })
+      .addCase(updateListing.fulfilled, (state, action) => {
+        const index = state.listings.findIndex(
+          listing => listing.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.listings[index] = action.payload;
+        }
       });
   }
 });

@@ -23,7 +23,7 @@ const io = new Server(httpServer, {
 // Middleware
 app.use(cors());
 // Increase payload limit to 50MB
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '500mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Routes
